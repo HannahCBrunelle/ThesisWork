@@ -1,0 +1,45 @@
+##### Parasitized Analysis - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 24,2022 - 
+
+#Mean and SD of Condition Factors
+YesmeanK <- mean(Parasitized_yes$Fulton.s.K, na.rm = TRUE) #1.190
+YesSDK <- sd(Parasitized_yes$K, na.rm = TRUE) #0.130
+install.packages("arsenal")
+library(arsenal)
+Comparedf(Parasitized_no, Parasitized_yes)
+
+#Sub-setting by a specific value within a variable
+#Parasites found 
+#K (mean 1.190) (min 0.652)(max 1.702)
+Parasitized_yes <- subset(DissectionsK, Parasitized.Y.N == "Yes")
+View(Parasitized_yes)
+summary(Parasitized_yes)
+
+#####Shapiro Normality Test#####
+#Add value to the histogram of the distribution
+#The null-hypothesis of this test is that the population is normally distributed. 
+#A data set with a p value of less than .05 rejects the null hypothesis that the data are from a normally distributed population
+shapiro.test(Parasitized_yes$FL_cm) 
+shapiro.test(Parasitized_yes$TL_mm) #W = 0.65632, p-value = 2.588e-05
+shapiro.test(Parasitized_yes$BodyWWt_g) #W = 0.92833, p-value = 0.324
+shapiro.test(Parasitized_yes$Fulton.s.K) #W = 0.94231, p-value = 0.4875
+
+#Histograms
+hist(Parasitized_yes$FL_cm) #NOT NORMAL
+hist(Parasitized_yes$TL_mm) #NOT NORMAL
+hist(Parasitized_yes$BodyWWt_g) #NOT NORMAL
+hist(Parasitized_yes$Fulton.s.K) #Show Katrina
+
+#Boxplot showing Trematode Abundance per Tributary 
+boxplot(Parasitized_yes$Fulton.s.K ~ Parasitized_yes$Tributary_Main)
+     ggplot(Parasitized_yes) +
+       aes(x = Fulton.s.K, y = Tributary_Main, colour = Tributary_Main) +
+       geom_boxplot()
+     
+#Boxplot showing Trematode Abundance per Age Class
+boxplot(Parasitized_yes$Fulton.s.K ~ Parasitized_yes$Age_Class)
+ggplot(Parasitized_yes) +
+       aes(x = Fulton.s.K, y = Age_Class, colour = Age_Class) +
+       geom_boxplot()
