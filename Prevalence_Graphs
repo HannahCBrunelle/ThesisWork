@@ -1,0 +1,96 @@
+#####Prevalence Graphs for SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 24,2022 - 
+
+#####Prevalence Bar Graph#####
+#Prevalence of parasitized fish by tributary:
+ParasiteTributary <- DissectionsK %>% 
+  count(Tributary_Main, Parasitized.Y.N, na.rm = TRUE) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Tributary_Main, na.rm = TRUE) %>%        # Group so proportions are out  total
+  mutate(proportion = n/sum(n)*100) # calculate proportions of total
+
+head(ParasiteTributary) # Preview data
+
+# Parasites in all samples by Tributary
+ggplot(ParasiteTributary, na.rm = TRUE) +  
+  geom_col(
+    mapping = aes(
+      x = proportion,                 # show pre-calculated proportion values
+      y = fct_rev(Tributary_Main),          # reverse level order so missing/other at bottom
+      fill = Parasitized.Y.N),                # stacked by outcome
+    width = 0.5) +                    # thinner bars (out of 1)
+  theme_minimal() +                  # Minimal theme 
+  theme(legend.position = "bottom") +
+  labs(subtitle = "Prevalence of Parasitized Fish By Tributary",
+       fill = "Parasitized",             # legend title
+       y = "Tributary",                  # y axis title
+       x = "Parasite Prevalence")  # x axis title
+
+
+
+#Prevalence of parasitized fish by Season:
+ParasiteSeason <- DissectionsK %>% 
+  count(Season, Parasitized.Y.N) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Season) %>%        # Group so proportions are out  total
+  mutate(proportion = n/sum(n)*100) # calculate proportions of total
+
+head(ParasiteSeason) # Preview data
+
+ggplot(ParasiteSeason) +  
+  geom_col(
+    mapping = aes(
+      x = proportion,                 # show pre-calculated proportion values
+      y = fct_rev(Season),          # reverse level order so missing/other at bottom
+      fill = Parasitized.Y.N),                # stacked by outcome
+    width = 0.5) +                    # thinner bars (out of 1)
+  theme_minimal() +                  # Minimal theme 
+  theme(legend.position = "bottom") +
+  labs(subtitle = "Prevalence of Parasitized Fish By Season",
+       fill = "Parasitized",             # legend title
+       y = "Season",                  # y axis title
+       x = "Parasite Prevalence")  # x axis title
+
+#Prevalence of parasitized fish by Month:
+ParasiteMonth <- DissectionsK %>% 
+  count(Month, Parasitized.Y.N) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Month) %>%        # Group so proportions are out  total
+  mutate(proportion = n/sum(n)*100) # calculate proportions of total
+
+head(ParasiteMonth) # Preview data
+
+ggplot(ParasiteMonth) +  
+  geom_col(
+    mapping = aes(
+      x = proportion,                 # show pre-calculated proportion values
+      y = fct_rev(Month),          # reverse level order so missing/other at bottom
+      fill = Parasitized.Y.N),                # stacked by outcome
+    width = 0.5) +                    # thinner bars (out of 1)
+  theme_minimal() +                  # Minimal theme 
+  theme(legend.position = "bottom") +
+  labs(subtitle = "Prevalence of Parasitized Fish By Month",
+       fill = "Parasitized",             # legend title
+       y = "Month",                  # y axis title
+       x = "Parasite Prevalence")  # x axis title
+
+#Prevalence of parasitized fish by Age Class: 
+ParasiteAge <- DissectionsK %>% 
+  count(Age_Class, Parasitized.Y.N) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Age_Class) %>%        # Group so proportions are out  total
+  mutate(proportion = n/sum(n)*100) # calculate proportions of total
+
+head(ParasiteAge) # Preview data
+
+ggplot(ParasiteAge) +  
+  geom_col(
+    mapping = aes(
+      x = proportion,                 # show pre-calculated proportion values
+      y = fct_rev(Age_Class),          # reverse level order so missing/other at bottom
+      fill = Parasitized.Y.N),                # stacked by outcome
+    width = 0.5) +                    # thinner bars (out of 1)
+  theme_minimal() +                  # Minimal theme 
+  theme(legend.position = "bottom") +
+  labs(subtitle = "Prevalence of Parasitized Fish By Age Class",
+       fill = "Parasitized",             # legend title
+       y = "Age",                  # y axis title
+       x = "Parasite Prevalence")  # x axis title
