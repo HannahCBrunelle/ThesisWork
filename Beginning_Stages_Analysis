@@ -1,0 +1,87 @@
+#####Beginning Stages of Playing with SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 17,2022 - 
+
+#Import data
+library(readr)
+DissectionsK <- read.csv("~/Desktop/TremDig.csv")
+na.omit(DissectionsK)
+View(DissectionsK)
+
+#Remove Random Columns added
+DissectionsK <- DissectionsK[ -c(17) ]
+
+#Investigating Data
+str(DissectionsK)
+head(DissectionsK)
+
+#Preview the Data 
+View(DissectionsK)
+
+#Overall Mean
+MeanALL <- mean(DissectionsK$Fulton.s.K, na.rm = TRUE)
+SDALL <- sd(DissectionsK$Fulton.s.K, na.rm = TRUE)
+
+summary(DissectionsK)
+
+#Loading in Packages 
+library(tidyverse)
+library(lubridate)
+library(dplyr)
+library(ggpubr)
+library(janitor)
+
+#ggpubr had an error and it was due to needing an older version in order to use it
+install_version("ggpubr", version = "0.2.5", repos = "http://cran.us.r-project.org")
+library(ggpubr)
+
+install_version("rstatix", version = "0.2.5", repos = "http://cran.us.r-project.org")
+devtools::install_version("cowplot", "0.7.0") # selected option #2
+devtools::install_version("car", "3.0-0") # selected option #3 None
+
+
+table(DissectionsK$Tributary_Main) #Checking out the new class
+table(DissectionsK$Season) #making sure all was still all right
+table(DissectionsK$Age_Class)
+table(DissectionsK$Month)
+
+#Creating tables with totals using dplyr and janitor functions:
+DissectionsK %>% 
+  summarise(
+    mean = K, ParasiztiedK, NonParasitizedK,
+    sd = K, ParasiztiedK, NonParasitizedK )
+
+group_by(DissectionsK, Parasitized) %>%  #indicates that I am grouping the dataset "YOY" by the various "Classification"
+  summarise(                       #Being summarized by meand and sd.
+    mean = mean(K),
+    sd = sd(K)
+  ) 
+
+as.numeric(Parasitized_yes$FL_cm)
+class(Parasitized_yes$FL_cm)
+
+#for some reason some of the numerical variables are showing as character
+#Converting to numeric
+DissectionsK$FL_mm <- as.numeric(as.character(DissectionsK$FL_mm)) 
+DissectionsK$Nematode <- as.numeric(as.factor(DissectionsK$Nematode))
+DissectionsK$Fulton.s.K <- as.integer(as.factor(DissectionsK$Fulton.s.K))
+DissectionsK$BodyWWt_g <- as.numeric(as.character(DissectionsK$BodyWWt_g))
+DissectionsK$TL_mm <- as.numeric(as.character(DissectionsK$TL_mm))
+DissectionsK$TL_cm <- as.numeric(as.character(DissectionsK$TL_cm))
+DissectionsK$FL_cm <- as.numeric(as.factor(DissectionsK$FL_cm))
+DissectionsK$Season <- as.character(as.factor(DissectionsK$Season))
+DissectionsK$Tributary_Main <- as.character(as.factor(DissectionsK$Tributary_Main))
+DissectionsK$Age_Class <- as.character(as.factor(DissectionsK$Age_Class))
+
+Parasitized_yes$TL_mm <- as.numeric(as.factor(Parasitized_yes$TL_mm))
+Parasitized_yes$TL_cm <- as.numeric(as.factor(Parasitized_yes$TL_cm))
+Parasitized_yes$BodyWWt_g <- as.numeric(as.factor(Parasitized_yes$BodyWWt_g))
+Parasitized_yes$FL_cm <- as.numeric(as.factor(Parasitized_yes$FL_cm))
+Parasitized_yes$Fulton.s.K <- as.numeric(as.factor(Parasitized_yes$Fulton.s.K))
+
+#Changing the Tributary Order
+#Reorder a factor to desired way for Boxplots
+Parasitized_no$Tributary_Main <- fct_relevel(Parasitized_no$Tributary_Main,"James","York","Rappahannock","Potomac","Nanticoke", "Patuxent","Choptank", "Rhode", "Upper_Bay")
+#Reorder a factor to desired way for Prevalence  
+DissectionsK$Tributary_Main <- fct_relevel(DissectionsK$Tributary_Main,"Upper_Bay","Rhode","Choptank","Patuxent","Nanticoke","Potomac","Rappahannock","York","James")
