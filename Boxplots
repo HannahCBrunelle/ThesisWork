@@ -1,0 +1,16 @@
+##### Boxplots - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 24,2022 - 
+
+#Boxplot showing Trematode Abundance per Tributary 
+boxplot(DissectionsK$Fulton.s.K ~ DissectionsK$Tributary_Main)
+ggplot(DissectionsK) +
+  aes(x = Fulton.s.K, y = Tributary_Main, colour = Tributary_Main) +
+  geom_boxplot()
+
+#Boxplot showing Trematode Abundance per Age Class
+boxplot(DissectionsK$Fulton.s.K ~ DissectionsK$Month)
+ggplot(DissectionsK) +
+  aes(x = Fulton.s.K, y = Month, colour = Season) +
+  geom_boxplot()
