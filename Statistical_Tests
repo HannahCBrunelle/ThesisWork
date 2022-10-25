@@ -1,0 +1,15 @@
+#####Statistical Analysis for SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 24,2022 - 
+
+#Kruskal-Wallis: nonparametric approach to the one-way ANOVA. 
+#Wilcoxon rank-sum test is used to compare two independent samples, 
+
+kruskal.test(DissectionsK$Trematode, DissectionsK$Fulton.s.K)#numerical, grouping
+#Kruskal-Wallis chi-squared = 445, df = 438, p-value = 0.3983
+kruskal.test(DissectionsK$Parasitized.Y.N, DissectionsK$Fulton.s.K) #numerical, grouping
+#Kruskal-Wallis chi-squared = 445, df = 438, p-value = 0.3983
+
+kruskal.test(Parasitized_yes$Trematode, Parasitized_yes$Fulton.s.K) #numerical, grouping
+#Kruskal-Wallis chi-squared = 12, df = 12, p-value = 0.4457
