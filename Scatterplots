@@ -1,0 +1,48 @@
+##### Scatterplot Analysis - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 24,2022 - 
+
+#Playing around with the scatterplots with Regression Line
+#PLaying around with the scatterplots 
+#How to put titles into plots
+plot(Parasitized_yes$Fulton.s.K,Parasitized_yes$Trematode)
+plot(Parasitized_yes$Trematode,Parasitized_yes$Fulton.s.K) 
+main='Condition Factor compared to Trematode Intensity'
+xlab='Condition Factor (K)'
+ylab='Trematode Intensity'
+
+# plot a regression line
+abline(lm(Trematode~Fulton.s.K,data=Parasitized_yes),col='red')
+
+plot(Parasitized_yes$Fulton.s.K , Parasitized_yes$Trematode)
+abline(PlotResults)
+PlotResults <- lm(Trematode ~ Fulton.s.K, data = Parasitized_yes)
+summary(PlotResults)
+
+lmod= lm(Trematode~Fulton.s.K, Parasitized_yes)
+summary(lmod)
+
+#Different way to make a scatterplot with a regression
+#Regular Scatterplot with Regression and Labels
+library(ggplot2)
+ggplot(Parasitized_yes, aes(K, Acanthocephalan, shape = Age_Class)) +
+  geom_point()+
+  geom_smooth(method=lm, se=0)+
+  theme_classic()+
+  annotate("text", x=1.5, y=45, label="p-value: 0.992")+
+  annotate("text", x=1.5, y=42, label="Multiple R-squared:  0.007574")+
+  annotate("text", x=1.5, y=39, label="Acanthocephalan = 4.481*K + 0.0635")
+
+#Scatterplot with labels, regression and shapes/colors per point
+#Extended regression line and removed confidence intervals
+ggplot(Parasitized_yes, aes(x=K, y=Acanthocephalan, color=Age_Class, shape=Age_Class)) +
+  geom_point() + 
+  geom_smooth(method=lm, se=FALSE, fullrange=TRUE) +
+  theme_classic()+
+  annotate("text", x=1.2, y=45, label="p-value: 0.992")+
+  annotate("text", x=1.2, y=42, label="Multiple R-squared:  0.007574")+
+  annotate("text", x=1.2, y=39, label="Acanthocephalan = 4.481*K + 0.0635")
+
+ggplot(Parasitized_yes, aes(x = K, y = Acanthocephalan, shape = Age_Class)) +
+  geom_point(size = 3) 
