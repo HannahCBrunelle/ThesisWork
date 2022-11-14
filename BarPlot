@@ -1,0 +1,24 @@
+#####Barplots with SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: October 31,2022 - 
+
+#Barplot showing age classes that are parasitized 
+ggplot(DissectionsK, aes(x = Parasitized, colour=Age_Class, fill= Age_Class)) +
+  geom_bar()
+
+#Barplot showing Tributaries that are parasitized 
+ggplot(DissectionsK, aes(x = Parasitized, colour=Tributary_Main, fill= Tributary_Main)) +
+  geom_bar()
+
+#Barplot showing Fish that are parasitized
+ggplot(DissectionsK, aes(x = Parasitized, colour=Parasitized, fill= Parasitized)) +
+  geom_bar()
+
+#Barplot showing the season that are parasitized
+ggplot(DissectionsK, aes(x = Parasitized, colour=Season, fill= Season)) +
+  geom_bar()
+
+#Barplot showing Fish that are parasitized
+ggplot(DissectionsK, aes(x = Parasitized, colour=Parasitized, fill= Parasitized)) +
+  geom_bar()
