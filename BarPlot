@@ -22,3 +22,59 @@ ggplot(DissectionsK, aes(x = Parasitized, colour=Season, fill= Season)) +
 #Barplot showing Fish that are parasitized
 ggplot(DissectionsK, aes(x = Parasitized, colour=Parasitized, fill= Parasitized)) +
   geom_bar()
+
+
+##### Barplots - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: November 7,2022 - 
+
+# Simple Bar Plot) +
+Q <- ggplot(DissectionsK, aes(x = name, colour=Age_Class, fill= Age_Class)) +
+  geom_bar()
+  
+pb <- p + ggtitle("Striped Bass Collected from Chesapeake Bay") +
+  xlab("Category of Parasitization") + ylab("Number of Fish") 
+
+pb
+
+
+#Barplot showing age classes that are parasitized 
+Q <- ggplot(DissectionsK, aes(x = Level_Of_Parasitization, colour=Age_Class, fill= Age_Class)) +
+  geom_bar()
+
+Q <- Q + ggtitle("Striped Bass Collected from Chesapeake Bay") +
+  xlab("Category of Parasitization") + ylab("Number of Fish")
+
+Q
+
+#Barplot showing Tributaries  that are parasitized 
+H <- ggplot(DissectionsK, aes(x = Level_Of_Parasitization, colour=Tributary_Main, fill= Tributary_Main)) +
+  geom_bar()
+
+H + ggtitle("Striped Bass Collected from Chesapeake Bay") +
+  xlab("Category of Parasitization") + ylab("Number of Fish")
+
+H
+
+#Barplot showing salinity that are parasitized 
+O <- ggplot(DissectionsK, aes(x = Salinity, colour= Tributary_Main, fill= Tributary_Main)) +
+  geom_bar()
+
+O + ggtitle("Salinity of Chesapeake Bay Tributaries") +
+  xlab("Salinity") + ylab("")
+
+#Barplot showing diversity that are parasitized 
+w <- ggplot(DissectionsK, aes(x = Number_Of_Parasite_Species, colour= Parasitized, fill= Parasitized)) +
+  geom_bar()
+
+w + ggtitle("Striped Bass Collected from Chesapeake Bay") +
+  xlab("Number of Parasite Species Per Fish") + ylab("Number of Fish")
+
+#Barplot showing K and species diveristy 
+L <- ggplot(DissectionsK, aes(x = Number_Of_Parasite_Species, fill= binK)) +
+  geom_bar()
+
+L + ggtitle("Parasite Diveristy compared to Condition Factor of Striped Bass") +
+  xlab("Number of Parasite Species Per Fish") + ylab("Number of Fish")+
+  guides(fill = guide_legend(title = "Condition Factor"))
