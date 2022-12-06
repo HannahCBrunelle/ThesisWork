@@ -1,0 +1,72 @@
+##### Barplots across multiple columns - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: December 5,2022 - 
+
+# load libraries
+
+library(tidyverse)
+library(readxl)
+
+# load data 'ParasiteDiversity' Table from Excel spreadsheet
+
+DissectionsK <- as.data.frame(read_excel("Desktop/ParasiteDiversity.xlsx")
+
+# Why are you using na.omit()? this can delete data even if NAs are only in some columns
+# see this little test of how it works
+test <- c(1, 2, 3, NA, NA, 4)
+test1 <- c("a", "b", "c", "d", "e", "f")
+test_df <- data.frame(numbers = test, letters = test1)
+
+# check the effect, you have less rows, always make sure that is what you intended
+# that said, you do not seem to have NA but we can check more
+test_df
+na.omit(test_df)
+
+
+#na.omit(DissectionsK)
+#View(DissectionsK)
+
+#Barplot showing Tributaries  that are parasitized
+H <- ggplot(DissectionsK, aes(x = Level_Of_Parasitization,
+                              #colour = Tributary_Main, # this color is not relevant because you are using fill
+                              fill = Tributary_Main)) +
+  geom_bar()
+
+H + ggtitle("Striped Bass Collected from Chesapeake Bay") +
+  xlab("Category of Parasitization") + ylab("Number of Fish")
+
+H
+
+# Hanna's goal
+# show the different parasitization levels (not parasitized, low, medium and high)
+# and the different parasite species. This would mean I would need to run multiple columns to create this bar plot.
+
+# you can make your data in the "long" format so that the taxa groups are now a variable
+# the gather() function allows you to do that, can explain how on Monday
+DissectionsK_long <- DissectionsK %>% gather(variable, value,
+                                             -Entry, -Sample.ID, -Age_Class,
+                                             -Level_Of_Parasitization,
+                                             -Number_Of_Parasite_Species,
+                                             -Parasitized, -Tributary_Main,
+                                             -Salinity)
+
+ggplot(DissectionsK_long, aes(x = , fill = Level_Of_Parasitization)) +
+  geom_bar() + 
+  ggtitle("Striped Bass Collected from Chesapeake Bay") +
+  xlab("Category of Parasitization") +
+  ylab("Amount of Parasite within each Category") +
+  # This one is to change the legend title to what you want
+  guides(fill = guide_legend(title = "Taxonomic group")) + 
+  # the things below are to make it look cleaner and to help you control size
+  # you may want to make larger or smaller depending if you are doing it for a ppt
+  # or for a report/publication
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.title.x = element_text(face = "bold", size = 13),
+        axis.title.y = element_text(face = "bold", size = 13),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 13))
